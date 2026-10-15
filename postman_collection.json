@@ -1,0 +1,538 @@
+{
+  "info": {
+    "name": "API de Biblioteca - Django",
+    "description": "Execute as requisições na ordem, com o banco vazio. O status esperado está no nome de cada requisição.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Livros",
+      "item": [
+        {
+          "name": "POST /books - cadastrar Clean Code (201)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/books",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "books"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Clean Code\",\n    \"author\": \"Robert C. Martin\",\n    \"year\": 2008,\n    \"available\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "POST /books - cadastrar Design Patterns (201)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/books",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "books"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Design Patterns\",\n    \"author\": \"Erich Gamma\",\n    \"year\": 1994,\n    \"available\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "POST /books - dados inválidos (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/books",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "books"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"author\": \"Fulano\",\n    \"year\": \"abc\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "GET /books - listar todos (200)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/books",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "books"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /books/1 - buscar um (200)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/books/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "books",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /books/99 - inexistente (404)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/books/99",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "books",
+                "99"
+              ]
+            }
+          }
+        },
+        {
+          "name": "PUT /books/2 - atualizar (200)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/books/2",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "books",
+                "2"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Design Patterns\",\n    \"author\": \"Erich Gamma\",\n    \"year\": 1995,\n    \"available\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Empréstimos e regras de negócio",
+      "item": [
+        {
+          "name": "POST /loans - emprestar livro 1 (201, livro fica indisponível)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/loans",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "loans"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"book_id\": 1,\n    \"person_name\": \"João da Silva\",\n    \"loan_date\": \"2026-10-07\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "GET /books/1 - conferir available false (200)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/books/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "books",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /books/available - livro 1 não aparece (200)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/books/available",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "books",
+                "available"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /loans - livro indisponível (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/loans",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "loans"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"book_id\": 1,\n    \"person_name\": \"Maria Souza\",\n    \"loan_date\": \"2026-10-08\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "POST /loans - livro inexistente (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/loans",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "loans"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"book_id\": 999,\n    \"person_name\": \"Maria Souza\",\n    \"loan_date\": \"2026-10-08\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "GET /loans - listar todos (200)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/loans",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "loans"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /loans/1 - buscar um (200)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/loans/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "loans",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /loans/99 - inexistente (404)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/loans/99",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "loans",
+                "99"
+              ]
+            }
+          }
+        },
+        {
+          "name": "PUT /loans/1 - devolução antes do empréstimo (400)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/loans/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "loans",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"book_id\": 1,\n    \"person_name\": \"João da Silva\",\n    \"loan_date\": \"2026-10-07\",\n    \"return_date\": \"2026-10-01\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "DELETE /books/1 - livro com empréstimo (400)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/books/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "books",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "PUT /loans/1 - registrar devolução (200, livro volta a ficar disponível)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/loans/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "loans",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"book_id\": 1,\n    \"person_name\": \"João da Silva\",\n    \"loan_date\": \"2026-10-07\",\n    \"return_date\": \"2026-10-15\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "GET /books/available - livro 1 voltou (200)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/books/available",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "books",
+                "available"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Remoções",
+      "item": [
+        {
+          "name": "DELETE /loans/1 - remover empréstimo (204)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/loans/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "loans",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "DELETE /books/2 - remover livro (204)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/books/2",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "books",
+                "2"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /books/2 - removido (404)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/books/2",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "books",
+                "2"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /rota-inexistente - 404 em JSON",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/rota-inexistente",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "rota-inexistente"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000"
+    }
+  ]
+}

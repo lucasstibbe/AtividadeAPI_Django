@@ -1,10 +1,10 @@
 from django.db import transaction
 from rest_framework import status, viewsets
-from rest_framework.response import Response
 from rest_framework.decorators import action
-from .serializers import AvailableBookSerializer, BookSerializer, LoanSerializer
+from rest_framework.response import Response
+
 from .models import Book, Loan
-from .serializers import BookSerializer, LoanSerializer
+from .serializers import AvailableBookSerializer, BookSerializer, LoanSerializer
 
 
 class BookViewSet(viewsets.ModelViewSet):
